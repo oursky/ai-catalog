@@ -6,68 +6,82 @@
   <title>Awesome AI Projects</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-
       <link rel="stylesheet" href="css/style.css">
-
-  
 </head>
 
 <body>
 
-<div class="hero">
-  <h1>💻 Impressive AI Projects</h1>
-  <h4>We believe Machine Learning and AI are changing the future. <br> Here's some great real exemples companies are doing.</h4>
-</div>
-<ul class="cards">
-  <li class="cards__item">
-    <div class="card">
-      <div class="card__image card__image--fence"></div>
-      <div class="card__content">
-        <div class="card__title">Uber</div>
-        <p class="card__text">Engineering Uber Predictions in Real Time with ELK. Its new real-time prediction system has now been rolled out across 400 cities worldwide.</p>
-        <button class="btn btn--block card__btn">Blog</button>
-      </div>
-    </div>
-  </li>
-  <li class="cards__item">
-    <div class="card">
-      <div class="card__image card__image--river"></div>
-      <div class="card__content">
-        <div class="card__title">Google DeepMind</div>
-        <p class="card__text">DeepMind Health to put the UK's most advanced technology at the service of patients, nurses and doctors.</p>
-        <a href="https://deepmind.com/applied/deepmind-health/"><button class="btn btn--block card__btn">Blog</button></a>
-      </div>
-    </div>
-  </li>
-  <li class="cards__item">
-    <div class="card">
-      <div class="card__image card__image--record"></div>
-      <div class="card__content">
-        <div class="card__title">Twitter</div>
-        <p class="card__text">Twitter enhanced the timeline to show the best Tweets for users first, Twitter improved the underlying algorithms in order to surface content that is even more relevant to users.</p>
-        <button class="btn btn--block card__btn">Blog</button>
-      </div>
-    </div>
-  </li>
-  <li class="cards__item">
-    <div class="card">
-      <div class="card__image card__image--flowers"></div>
-      <div class="card__content">
-        <div class="card__title">Alpha Go</div>
-        <p class="card__text">AlphaGo is the first computer program to defeat a professional human Go player, the first program to defeat a Go world champion, and arguably the strongest Go player in history.</p>
-        <button class="btn btn--block card__btn">Paper</button>
-      </div>
-    </div>
-  </li>
-</ul>
-<div class="suggestion">
-  <form>
-    <h3>💡Have we've missed any great project? </h3>
-    <label for="url">Suggest to list it here. Fill in the URL to the project</label> <input name="url" type="text" placeholder="e.g. https://eng.uber.com/michelangelo"/>
-    <button class="btn btn--block">Submit</button>
-  </form>
-</div>
-  
-<footer>&copy; Brought to you by <a href="https://oursky.com">Oursky</a> | <a href="https://skygear">Skygear</a></footer>
+  <div class="hero">
+    <h1>💻 Impressive AI Projects</h1>
+    <h4>We believe Machine Learning and AI are changing the future. <br> Here's some great real exemples companies are doing.</h4>
+  </div>
+  <ul class="cards" id="cards">
+    <!-- To fill in data -->
+  </ul>
+  <div class="suggestion">
+    <form>
+      <h3>💡Have we've missed any great project? </h3>
+      <label for="url">Suggest to list it here. Fill in the URL to the project</label> <input name="url" type="text" placeholder="e.g. https://eng.uber.com/michelangelo"/>
+      <button class="btn btn--block">Submit</button>
+    </form>
+  </div>
+    
+  <footer>&copy; Brought to you by <a href="https://oursky.com">Oursky</a> | <a href="https://skygear">Skygear</a></footer>
+
+
+  <script type="text/javascript" src="js/zepto.min.js">
+  </script>
+
+  <script>
+  var Card = function (title, desc ,imageURL, btnTitle, btnURL) {
+    this.title = title;
+    this.desc = desc;
+    this.btnTitle = btnTitle;
+    this.btnURL = btnURL;
+    this.imageURL = imageURL;
+  }
+
+  Card.prototype.getCardElement = function() {
+       let templateCard = '<li class="cards__item">\
+        <div class="card">\
+          <div class="card__image"><img src="{{image}}"></div>\
+          <div class="card__content">\
+            <div class="card__title">{{title}}</div>\
+            <p class="card__text">{{desc}}</p>\
+            <a href="{{btn-url}}" target="_blank"><button class="btn btn--block card__btn">{{btn-title}}</button></a>\
+          </div>\
+        </div>\
+      </li>';
+
+      var resultTemplate = templateCard.replace("{{title}}", this.title);
+      resultTemplate = resultTemplate.replace("{{desc}}", this.desc);
+      resultTemplate = resultTemplate.replace("{{btn-url}}", this.btnURL);
+      resultTemplate = resultTemplate.replace("{{image}}", this.imageURL);
+      resultTemplate = resultTemplate.replace("{{btn-title}}", this.btnTitle);
+
+      return $(resultTemplate);
+  }
+
+  let cardContainer = $("#cards");
+
+  function init (){
+    $.getJSON('https://apitable.skygeario.com/api/tables?id=43b6ebe9-3472-4947-afee-37a9e4993113&token=92684941-8b6c-44fd-9abe-672eca88870c', function(data){
+        console.log(data)
+        if (data && data.ok) {
+          records = data.table.records;
+          let length = records.length;
+          for (var i = 0 ; i < length; i++) {
+            let record = records[i];
+
+            var card = new Card(record.title,record.desc, record.image, record.btnTitle,record.btnURL);
+            cardContainer.append(card.getCardElement());
+          }
+        }
+      })
+    }
+
+    init();
+    </script>
+
 </body>
 </html>
