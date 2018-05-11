@@ -4,8 +4,9 @@
   box-sizing: border-box;
 }
 html {
-  /*background-color: #dfe9f3;*/
-  background: linear-gradient(to top, #dfe9f3 0%, white 100%);
+  background-color: #dfe9f3;
+  transition: 0.3s background;
+  /*background: linear-gradient(to top, #dfe9f3 0%, white 100%);*/
 }
 
 html, body {
@@ -73,6 +74,7 @@ a:hover .btn {
   display: -ms-flexbox;
   display: flex;
   padding: 1rem;
+  width: 100%;
 }
 @media (min-width: 40rem) {
   .cards__item {
@@ -86,7 +88,7 @@ a:hover .btn {
 }
 .card {
   background-color: white;
-  min-width: 20rem;
+  width: 100%;
   border-radius: 0.25rem;
   box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
   display: -webkit-box;
@@ -155,7 +157,7 @@ a:hover .btn {
 .card__title {
   color: #696969;
   font-size: 1.25rem;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
@@ -166,6 +168,18 @@ a:hover .btn {
   font-size: 0.875rem;
   line-height: 1.5;
   margin-bottom: 1.25rem;
+}
+.tags {
+  margin-top: 18px;
+}
+.tags .tag {
+  background: #ddd;
+  color: #666;
+  border-radius: 10px;
+  padding: 2px 10px;
+  font-size: 10px;
+
+
 }
 .hero {
   text-align: center;
